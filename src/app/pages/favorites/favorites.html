@@ -1,0 +1,56 @@
+<div class="favorites-container">
+    <div class="header">
+        <h1 class="title">
+            <mat-icon class="heart-icon">favorite</mat-icon>
+            Mis Favoritos
+        </h1>
+        <p class="subtitle">{{ favoritesCount() }} Pokémon en tu colección</p>
+    </div>
+
+    @if (favorites().length === 0) {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">favorite_border</mat-icon>
+        <h2>No tienes Pokémon favoritos</h2>
+        <p>Explora la Pokédex y agrega tus Pokémon favoritos</p>
+        <button mat-raised-button color="primary" (click)="goToHome()" class="explore-btn">
+            <mat-icon>explore</mat-icon>
+            Explorar Pokédex
+        </button>
+    </div>
+    } @else {
+    <div class="favorites-grid">
+        @for (pokemon of favorites(); track pokemon.id) {
+        <mat-card class="favorite-card" (click)="viewDetail(pokemon.name)">
+            <button mat-icon-button class="remove-btn" (click)="removeFavorite(pokemon.id, $event)"
+                matTooltip="Quitar de favoritos">
+                <mat-icon>close</mat-icon>
+            </button>
+
+            <div class="pokemon-image-container">
+                <img [src]="pokemon.image" [alt]="pokemon.name" class="pokemon-image" />
+            </div>
+
+            <mat-card-content>
+                <div class="pokemon-id">#{{ pokemon.id.toString().padStart(3, '0') }}</div>
+                <h3 class="pokemon-name">{{ pokemon.name | titlecase }}</h3>
+
+                <div class="pokemon-types">
+                    @for (type of pokemon.types; track type) {
+                    <mat-chip class="type-chip" [style.background-color]="getTypeColor(type)">
+                        {{ type | titlecase }}
+                    </mat-chip>
+                    }
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button color="primary" class="details-btn">
+                    Ver detalles
+                    <mat-icon>arrow_forward</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        }
+    </div>
+    }
+</div>

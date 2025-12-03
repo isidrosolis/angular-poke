@@ -1,0 +1,92 @@
+<div class="contact-container">
+    <div class="header">
+        <h1 class="title">
+            <mat-icon class="contact-icon">email</mat-icon>
+            Contacto
+        </h1>
+        <p class="subtitle">¿Tienes alguna consulta? Estamos aquí para ayudarte</p>
+    </div>
+
+    <mat-card class="contact-card">
+        <mat-card-content>
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+                <div class="form-row">
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="nombre" placeholder="Ej: Juan" />
+                        <mat-icon matPrefix>person</mat-icon>
+                        @if (contactForm.get('nombre')?.invalid && (contactForm.get('nombre')?.dirty || submitted())) {
+                        <mat-error>{{ getErrorMessage('nombre') }}</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Apellido</mat-label>
+                        <input matInput formControlName="apellido" placeholder="Ej: Pérez" />
+                        <mat-icon matPrefix>person_outline</mat-icon>
+                        @if (contactForm.get('apellido')?.invalid && (contactForm.get('apellido')?.dirty ||
+                        submitted())) {
+                        <mat-error>{{ getErrorMessage('apellido') }}</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" placeholder="ejemplo@email.com" />
+                        <mat-icon matPrefix>email</mat-icon>
+                        @if (contactForm.get('email')?.invalid && (contactForm.get('email')?.dirty || submitted())) {
+                        <mat-error>{{ getErrorMessage('email') }}</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput type="tel" formControlName="telefono" placeholder="1234567890" />
+                        <mat-icon matPrefix>phone</mat-icon>
+                        @if (contactForm.get('telefono')?.invalid && (contactForm.get('telefono')?.dirty ||
+                        submitted())) {
+                        <mat-error>{{ getErrorMessage('telefono') }}</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" class="form-field full-width">
+                    <mat-label>Consulta</mat-label>
+                    <textarea matInput formControlName="consulta" rows="6"
+                        placeholder="Escribe tu consulta aquí..."></textarea>
+                    <mat-icon matPrefix>message</mat-icon>
+                    @if (contactForm.get('consulta')?.invalid && (contactForm.get('consulta')?.dirty || submitted())) {
+                    <mat-error>{{ getErrorMessage('consulta') }}</mat-error>
+                    }
+                </mat-form-field>
+
+                <div class="form-actions">
+                    <button mat-raised-button color="primary" type="submit" class="submit-btn">
+                        <mat-icon>send</mat-icon>
+                        Enviar Consulta
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="info-section">
+        <div class="info-card">
+            <mat-icon>location_on</mat-icon>
+            <h3>Ubicación</h3>
+            <p>Ciudad Pokémon, Kanto</p>
+        </div>
+        <div class="info-card">
+            <mat-icon>phone</mat-icon>
+            <h3>Teléfono</h3>
+            <p>+54 11 1234-5678</p>
+        </div>
+        <div class="info-card">
+            <mat-icon>schedule</mat-icon>
+            <h3>Horarios</h3>
+            <p>Lun - Vie: 9:00 - 18:00</p>
+        </div>
+    </div>
+</div>

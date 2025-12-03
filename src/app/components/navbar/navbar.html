@@ -1,0 +1,46 @@
+<mat-toolbar class="navbar" color="primary">
+    <div class="navbar-container">
+        <div class="brand" (click)="navigate('/')">
+            <mat-icon class="brand-icon">catching_pokemon</mat-icon>
+            <span class="brand-text">Pokédex</span>
+        </div>
+
+        <nav class="desktop-nav">
+            <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon>home</mat-icon>
+                Inicio
+            </button>
+            <button mat-button routerLink="/favorites" routerLinkActive="active">
+                <mat-icon [matBadge]="favoritesCount()" [matBadgeHidden]="favoritesCount() === 0"
+                    matBadgeColor="warn">favorite</mat-icon>
+                Favoritos
+            </button>
+            <button mat-button routerLink="/contact" routerLinkActive="active">
+                <mat-icon>email</mat-icon>
+                Contacto
+            </button>
+        </nav>
+
+        <button mat-icon-button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+            <mat-icon>{{ mobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+
+@if (mobileMenuOpen()) {
+<div class="mobile-nav" (click)="closeMobileMenu()">
+    <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>home</mat-icon>
+        Inicio
+    </button>
+    <button mat-button routerLink="/favorites" routerLinkActive="active">
+        <mat-icon [matBadge]="favoritesCount()" [matBadgeHidden]="favoritesCount() === 0"
+            matBadgeColor="warn">favorite</mat-icon>
+        Favoritos
+    </button>
+    <button mat-button routerLink="/contact" routerLinkActive="active">
+        <mat-icon>email</mat-icon>
+        Contacto
+    </button>
+</div>
+}

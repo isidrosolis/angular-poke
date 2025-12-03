@@ -1,0 +1,100 @@
+<div class="pokemon-detail-container">
+    @if (loading()) {
+    <div class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Cargando Pokémon...</p>
+    </div>
+    } @else if (pokemon()) {
+    <div class="detail-content">
+        <div class="header-actions">
+            <button mat-raised-button (click)="goBack()" class="back-btn">
+                <mat-icon>arrow_back</mat-icon>
+                Volver
+            </button>
+            <button mat-fab extended color="primary" (click)="toggleFavorite()" [class.is-favorite]="isFavorite()"
+                class="favorite-fab">
+                <mat-icon>{{ isFavorite() ? 'favorite' : 'favorite_border' }}</mat-icon>
+                {{ isFavorite() ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
+            </button>
+        </div>
+
+        <mat-card class="main-card">
+            <div class="card-content">
+                <div class="image-section">
+                    <div class="pokemon-id">#{{ pokemon()!.id.toString().padStart(3, '0') }}</div>
+                    <div class="image-container">
+                        <img [src]="pokemon()!.sprites.other['official-artwork'].front_default || pokemon()!.sprites.front_default"
+                            [alt]="pokemon()!.name" class="pokemon-image" />
+                    </div>
+                    <h1 class="pokemon-name">{{ pokemon()!.name | titlecase }}</h1>
+                    <div class="pokemon-types">
+                        @for (type of pokemon()!.types; track type.slot) {
+                        <mat-chip class="type-chip" [style.background-color]="getTypeColor(type.type.name)">
+                            {{ type.type.name | titlecase }}
+                        </mat-chip>
+                        }
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <mat-icon>straighten</mat-icon>
+                            <div class="info-content">
+                                <span class="info-label">Altura</span>
+                                <span class="info-value">{{ pokemon()!.height / 10 }} m</span>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <mat-icon>fitness_center</mat-icon>
+                            <div class="info-content">
+                                <span class="info-label">Peso</span>
+                                <span class="info-value">{{ pokemon()!.weight / 10 }} kg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="abilities-section">
+                        <h3 class="section-title">
+                            <mat-icon>star</mat-icon>
+                            Habilidades
+                        </h3>
+                        <div class="abilities-list">
+                            @for (ability of pokemon()!.abilities; track ability.slot) {
+                            <mat-chip [class.hidden-ability]="ability.is_hidden">
+                                {{ ability.ability.name | titlecase }}
+                                @if (ability.is_hidden) {
+                                <mat-icon>visibility_off</mat-icon>
+                                }
+                            </mat-chip>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="stats-section">
+                        <h3 class="section-title">
+                            <mat-icon>analytics</mat-icon>
+                            Estadísticas Base
+                        </h3>
+                        <div class="stats-list">
+                            @for (stat of pokemon()!.stats; track stat.stat.name) {
+                            <div class="stat-item">
+                                <div class="stat-header">
+                                    <span class="stat-name">{{ stat.stat.name | titlecase }}</span>
+                                    <span class="stat-value">{{ stat.base_stat }}</span>
+                                </div>
+                                <div class="stat-bar-container">
+                                    <div class="stat-bar" [style.width.%]="getStatPercentage(stat.base_stat)"
+                                        [style.background-color]="getStatColor(stat.base_stat)"></div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    }
+</div>

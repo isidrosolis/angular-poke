@@ -1,0 +1,108 @@
+<div class="pokemon-list-container">
+  <div class="header">
+    <h1 class="title">
+      <mat-icon class="pokeball-icon">catching_pokemon</mat-icon>
+      Lista de Pokemons
+    </h1>
+    <p class="subtitle">Descubre y colecciona tus Pokémon favoritos</p>
+  </div>
+
+  <div class="search-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar Pokémon</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="onSearch()"
+        placeholder="Ej: Pikachu"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+      @if (searchTerm()) {
+        <button mat-icon-button matSuffix (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="onSearch()" class="search-btn">
+      Buscar
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Cargando Pokémon...</p>
+    </div>
+  } @else {
+    @if (filteredPokemons().length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">search_off</mat-icon>
+        <h2>No se encontraron Pokémon</h2>
+        <p>Intenta con otro nombre</p>
+        <button mat-raised-button color="primary" (click)="clearSearch()">
+          Ver todos
+        </button>
+      </div>
+    } @else {
+      <div class="pokemon-grid">
+        @for (pokemon of filteredPokemons(); track pokemon.id) {
+          <mat-card class="pokemon-card" (click)="viewDetail(pokemon.name)">
+            <div class="card-header">
+              <span class="pokemon-id">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+              <button
+                mat-icon-button
+                class="favorite-btn"
+                [class.is-favorite]="isFavorite(pokemon.id)"
+                (click)="toggleFavorite(pokemon); $event.stopPropagation()"
+              >
+                <mat-icon>{{ isFavorite(pokemon.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+              </button>
+            </div>
+
+            <div class="pokemon-image-container">
+              <img
+                [src]="pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default"
+                [alt]="pokemon.name"
+                class="pokemon-image"
+              />
+            </div>
+
+            <mat-card-content>
+              <h3 class="pokemon-name">{{ pokemon.name | titlecase }}</h3>
+
+              <div class="pokemon-types">
+                @for (type of pokemon.types; track type.slot) {
+                  <mat-chip
+                    class="type-chip"
+                    [style.background-color]="getTypeColor(type.type.name)"
+                  >
+                    {{ type.type.name | titlecase }}
+                  </mat-chip>
+                }
+              </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+              <button mat-button color="primary" class="details-btn">
+                Ver detalles
+                <mat-icon>arrow_forward</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+
+      @if (!searchTerm()) {
+        <mat-paginator
+          [length]="totalPokemons()"
+          [pageSize]="pageSize()"
+          [pageIndex]="pageIndex()"
+          [pageSizeOptions]="[10, 20, 50, 100]"
+          (page)="onPageChange($event)"
+          class="paginator"
+        >
+        </mat-paginator>
+      }
+    }
+  }
+</div>
