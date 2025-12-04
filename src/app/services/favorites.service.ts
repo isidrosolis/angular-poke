@@ -12,7 +12,7 @@ export class FavoritesService {
     favoritesCount = computed(() => this.favoritesSignal().length);
 
     constructor() {
-        // Auto-save to localStorage when favorites change
+        // Guardo losfavoritos
         effect(() => {
             this.saveToStorage(this.favoritesSignal());
         });
