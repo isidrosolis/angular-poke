@@ -4,14 +4,14 @@
             <mat-icon class="heart-icon">favorite</mat-icon>
             Mis Favoritos
         </h1>
-        <p class="subtitle">{{ favoritesCount() }} Pokémon en tu colección</p>
+        <p class="subtitle">{{ favoritesCount() }} Pokemon en tu colección</p>
     </div>
 
     @if (favorites().length === 0) {
     <div class="empty-state">
         <mat-icon class="empty-icon">favorite_border</mat-icon>
-        <h2>No tienes Pokémon favoritos</h2>
-        <p>Explora la Pokédex y agrega tus Pokémon favoritos</p>
+        <h2>No tienes Pokemon favoritos</h2>
+        <p>Explora la Pokédex y agrega tus Pokemon favoritos</p>
         <button mat-raised-button color="primary" (click)="goToHome()" class="explore-btn">
             <mat-icon>explore</mat-icon>
             Explorar Pokédex

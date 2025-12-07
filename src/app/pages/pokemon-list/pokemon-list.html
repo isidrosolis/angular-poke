@@ -31,13 +31,13 @@
   @if (loading()) {
     <div class="loading-container">
       <mat-spinner></mat-spinner>
-      <p>Cargando Pokémon...</p>
+      <p>Cargando Pokemon...</p>
     </div>
   } @else {
     @if (filteredPokemons().length === 0) {
       <div class="empty-state">
         <mat-icon class="empty-icon">search_off</mat-icon>
-        <h2>No se encontraron Pokémon</h2>
+        <h2>No se encontraron Pokemon</h2>
         <p>Intenta con otro nombre</p>
         <button mat-raised-button color="primary" (click)="clearSearch()">
           Ver todos

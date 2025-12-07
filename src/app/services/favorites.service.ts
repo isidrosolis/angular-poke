@@ -12,7 +12,7 @@ export class FavoritesService {
     favoritesCount = computed(() => this.favoritesSignal().length);
 
     constructor() {
-        // Guardo losfavoritos
+        // Guardo los favoritos
         effect(() => {
             this.saveToStorage(this.favoritesSignal());
         });
